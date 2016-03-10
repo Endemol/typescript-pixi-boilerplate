@@ -9,6 +9,8 @@ class MessageMediator {
 
 	public container:Container;
 
+	private _activeMessages:Array<AbstractMessage>;
+
 
 	/**
 	 * Message Mediator
@@ -17,7 +19,15 @@ class MessageMediator {
 	constructor() {
 		// TODO: add event / notification handlers for incoming messages, link to the message handler
 
-		this.container = new Container()
+		this.container = new Container();
+		this._activeMessages = [];
+	}
+
+	/**
+	 * Close All Messages
+	 */
+	public closeAllMessages () {
+
 	}
 
 
@@ -71,7 +81,17 @@ class MessageMediator {
 		this.container.addChild(message);
 
 		// Add signal handlers
+		message.closed.addOnce(this.messageClosedHandler);
 
+		// Add to active messages
+		this._activeMessages.push(message);
+	}
+
+	/**
+	 * Message Closed Handler
+	 * @param {AbstractMessage} message
+	 */
+	private messageClosedHandler (message:AbstractMessage) {
 
 	}
 
