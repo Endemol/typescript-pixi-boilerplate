@@ -4,8 +4,8 @@
  */
 class MessageType {
 
-	public static ERROR:string = 'error';
-	public static GENERIC:string = 'generic';
-	public static CONFIRMATION:string = 'confirm';
+	public static ERROR:string          = 'mt:ERROR';
+	public static GENERIC:string        = 'mt:GENERIC';
+	public static CONFIRMATION:string   = 'mt:CONFIRMATION';
 
 }
