@@ -1,0 +1,6 @@
+
+
+
+class ConfirmationMessage extends AbstractMessage {
+
+}

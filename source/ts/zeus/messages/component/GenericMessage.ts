@@ -1,0 +1,6 @@
+
+
+
+class GenericMessage extends AbstractMessage {
+
+}

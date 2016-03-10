@@ -31,9 +31,9 @@ class App {
 		generateGenericButton.onclick = this._generateGenericMessageHandler.bind(this);
 		generateConfirmButton.onclick = this._generateConfirmationMessageHandler.bind(this);
 
-
 		// init pixi
 		this.pixiMediator = new PixiMediator(620,340,'demo');
+		this.pixiMediator.scene.addChild(this.messageMediator.container);
 
 		// init render loop
 		this.updateLoop = new UpdateLoop();
@@ -53,17 +53,17 @@ class App {
 	// Resize Handlers --------------------------------------------------------
 
 	private _generateErrorMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.ERROR,'Test Error','This is a test error, for testing!');
+		var vo:MessageVO = new MessageVO(MessageType.ERROR,MessageLocaion.INTERNAL,'Test Error','This is a test error, for testing!');
 		this.messageMediator.displayMessage(vo);
 	}
 
 	private _generateGenericMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.GENERIC,'Generic Message','This is a generic message!');
+		var vo:MessageVO = new MessageVO(MessageType.GENERIC,MessageLocaion.INTERNAL,'Generic Message','This is a generic message!');
 		this.messageMediator.displayMessage(vo);
 	}
 
 	private _generateConfirmationMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.CONFIRMATION,'Confirm','Please confirm this message');
+		var vo:MessageVO = new MessageVO(MessageType.CONFIRMATION,MessageLocaion.INTERNAL,'Confirm','Please confirm this message');
 		this.messageMediator.displayMessage(vo);
 	}
 
