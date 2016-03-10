@@ -6,8 +6,13 @@ class App {
 
 	// Variables --------------------------------------------------------------
 	public messageMediator:MessageMediator;
+	public pixiMediator:PixiMediator;
+	public updateLoop:UpdateLoop;
 
 	// Getters and Setters ----------------------------------------------------
+	public get width():number {return document.body.clientWidth; }
+	public get height():number {return document.body.clientHeight; }
+
 
 	/**
 	 * @constructor
@@ -27,9 +32,25 @@ class App {
 		generateConfirmButton.onclick = this._generateConfirmationMessageHandler.bind(this);
 
 
+		// init pixi
+		this.pixiMediator = new PixiMediator(620,340,'demo');
+
+		// init render loop
+		this.updateLoop = new UpdateLoop();
+		this.updateLoop.add(this.pixiMediator);
+		this.updateLoop.start();
+
+		// add dom elements
+		var container = document.getElementsByClassName('demo')[0];
+		container.appendChild( this.pixiMediator.domElement );
+
+		// add event handlers
+		window.addEventListener("resize", this._resizeHandler.bind(this));
+
 	}
 
 
+	// Resize Handlers --------------------------------------------------------
 
 	private _generateErrorMessageHandler() {
 		var vo:MessageVO = new MessageVO(MessageType.ERROR,'Test Error','This is a test error, for testing!');
@@ -46,9 +67,8 @@ class App {
 		this.messageMediator.displayMessage(vo);
 	}
 
-
-
-
-
+	private _resizeHandler(event:Object):void {
+		//this.pixiMediator.resize(this.width,this.height);
+	}
 
 }
