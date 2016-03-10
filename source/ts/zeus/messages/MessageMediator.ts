@@ -23,12 +23,6 @@ class MessageMediator {
 		this._activeMessages = [];
 	}
 
-	/**
-	 * Close All Messages
-	 */
-	public closeAllMessages () {
-
-	}
 
 
 	/**
@@ -65,15 +59,15 @@ class MessageMediator {
 		switch (vo.type) {
 
 			case MessageType.ERROR:
-				message = new ErrorMessage();
+				message = new ErrorMessage(vo);
 				break;
 
 			case MessageType.GENERIC:
-				message = new GenericMessage();
+				message = new GenericMessage(vo);
 				break;
 
 			case MessageType.CONFIRMATION:
-				message = new ConfirmationMessage();
+				message = new ConfirmationMessage(vo);
 				break;
 		}
 
