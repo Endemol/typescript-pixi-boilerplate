@@ -22,9 +22,23 @@
 </script>
 
 <body onload="init()">>
-    <button id="generate-error" type="button">Create Error Message</button>
-    <button id="generate-generic" type="button">Create Generic Message</button>
-    <button id="generate-confirm" type="button">Create Conformation Message</button>
+    <div class="utils">
+        <form name="generateMessage">
+            <select id="type" name="type">
+                <option value="mt:ERROR">Error</option>
+                <option value="mt:GENERIC">Generic</option>
+                <option value="mt:CONFIRMATION">Confirmation</option>
+            </select>
+            <select id="location" name="location">
+                <option value="-1">External</option>
+                <option value="0">Hidden</option>
+                <option value="1">Internal</option>
+            </select>
+            Title: <input type="text" name="title" value="title">
+            Body: <input type="text" name="body" value="body">
+            <button id="generate" type="button">Create Message</button>
+        </form>
+    </div>
     <div class="demo"></div>
 </body>
 

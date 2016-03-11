@@ -8,10 +8,21 @@ class App {
 	public messageMediator:MessageMediator;
 	public pixiMediator:PixiMediator;
 	public updateLoop:UpdateLoop;
+	private _type:HTMLSelectElement;
+	private _location:HTMLSelectElement;
+	private _title:HTMLInputElement;
+	private _body:HTMLInputElement;
 
 	// Getters and Setters ----------------------------------------------------
 	public get width():number {return document.body.clientWidth; }
 	public get height():number {return document.body.clientHeight; }
+
+
+	public get type():string { return this._type.options[this._type.selectedIndex].value; }
+	public get location():number { return Number(this._location.options[this._location.selectedIndex].value); }
+
+	public get title():string {return this._title.value;}
+	public get body():string {return this._body.value;}
 
 
 	/**
@@ -22,14 +33,18 @@ class App {
 		this.messageMediator = new MessageMediator();
 
 		// get buttons
-		var generateErrorButton:HTMLButtonElement = <HTMLButtonElement>(document.getElementById('generate-error'));
-		var generateGenericButton:HTMLButtonElement = <HTMLButtonElement>(document.getElementById('generate-generic'));
-		var generateConfirmButton:HTMLButtonElement = <HTMLButtonElement>(document.getElementById('generate-confirm'));
+		var generateMessageButton:HTMLButtonElement = <HTMLButtonElement>(document.getElementById('generate'));
+
+		var form:HTMLFormElement = document.forms["generateMessage"];
+		this._type = form['type'];
+		this._location = form['location'];
+		this._title = form['title'];
+		this._body = form['body'];
+
+		debugger;
 
 		// add event handlers
-		generateErrorButton.onclick = this._generateErrorMessageHandler.bind(this);
-		generateGenericButton.onclick = this._generateGenericMessageHandler.bind(this);
-		generateConfirmButton.onclick = this._generateConfirmationMessageHandler.bind(this);
+		generateMessageButton.onclick = this._generateMessageHandler.bind(this);
 
 		// init pixi
 		this.pixiMediator = new PixiMediator(620,340,'demo');
@@ -52,20 +67,12 @@ class App {
 
 	// Resize Handlers --------------------------------------------------------
 
-	private _generateErrorMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.ERROR,MessageLocaion.INTERNAL,'Test Error','This is a test error, for testing!');
+	private _generateMessageHandler() {
+		var vo:MessageVO = new MessageVO(this.type,this.location,this.title,this.body);
 		this.messageMediator.displayMessage(vo);
 	}
 
-	private _generateGenericMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.GENERIC,MessageLocaion.INTERNAL,'Generic Message','This is a generic message!');
-		this.messageMediator.displayMessage(vo);
-	}
 
-	private _generateConfirmationMessageHandler() {
-		var vo:MessageVO = new MessageVO(MessageType.CONFIRMATION,MessageLocaion.INTERNAL,'Confirm','Please confirm this message');
-		this.messageMediator.displayMessage(vo);
-	}
 
 	private _resizeHandler(event:Object):void {
 		//this.pixiMediator.resize(this.width,this.height);
