@@ -78,7 +78,8 @@ class MessageMediator {
 		message.closed.addOnce(this.messageClosedHandler);
 
 		// Add to active messages
-		this._activeMessages.push(message);
+		// TODO: add to active message array when the messageClosedHandler is working
+		// this._activeMessages.push(message);
 	}
 
 	/**
@@ -86,7 +87,7 @@ class MessageMediator {
 	 * @param {AbstractMessage} message
 	 */
 	private messageClosedHandler (message:AbstractMessage) {
-
+		// TODO: removing from active message array
 	}
 
 
