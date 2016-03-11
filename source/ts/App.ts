@@ -41,8 +41,6 @@ class App {
 		this._title = form['title'];
 		this._body = form['body'];
 
-		debugger;
-
 		// add event handlers
 		generateMessageButton.onclick = this._generateMessageHandler.bind(this);
 
