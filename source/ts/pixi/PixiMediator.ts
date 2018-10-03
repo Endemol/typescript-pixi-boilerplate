@@ -1,10 +1,9 @@
+import * as PIXI from "pixi.js";
 import SystemRenderer = PIXI.SystemRenderer;
-import CanvasRenderer = PIXI.CanvasRenderer;
 import Container = PIXI.Container;
 import {IUpdate} from '../loop/IUpdate';
 import Application = PIXI.Application;
 import RendererOptions = PIXI.RendererOptions;
-import * as PIXI from "pixi.js";
 
 
 /**

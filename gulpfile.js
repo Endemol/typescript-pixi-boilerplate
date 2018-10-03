@@ -15,14 +15,8 @@ var browserSync = require('browser-sync');              // Open a new browser se
 var del = require('del');                               // Delete files
 var runSequence = require('run-sequence');              // Manage async tasks
 var changed = require('gulp-changed');                  // Only affect changed files
+var webpackStream = require('webpack-stream');				// compile and concat typescript and libs
 var sourcemaps = require('gulp-sourcemaps');            // Source Maps
-var watch = require('gulp-watch');                      // Watch
-var concat = require('gulp-concat');                    // For Combining JavaScript files
-var uglify = require('gulp-uglify');                    // For minifing Javascript
-var debug = require('gulp-debug');						// Streams to see what files are run through your gulp pipeline
-var	tsc = require('gulp-typescript');					// TypeScript Compiler
-var	tslint = require('gulp-tslint');					// TypeScript Linter
-var prompt = require('gulp-prompt');                    // Interactive console prompts
 
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -66,6 +60,7 @@ function getDirectory(language) {
 	dir.build.json 		= dir.build.root + '/lang/'+language+'/';
 	dir.build.sounds 	= dir.build.root + '/sounds/';
 	dir.build.html 		= dir.build.root;
+	dir.build.index 	= dir.build.root + '/index.html';
 }
 getDirectory('en');
 
@@ -116,7 +111,6 @@ function errorHandler(error){
 // DEFAULT ------------------------------------------------
 gulp.task('default', function () {
     runSequence(
-        'clean',
         'ts',
         ['css','html'],
         'watch',
@@ -130,36 +124,12 @@ gulp.task('init', function () {
 
 });
 
-// JAVASCRIPT  --------------------------------------------
-gulp.task('js', function () {
-    return gulp.src(dir.source.js+'/**/*')
-        .pipe(changed(dir.build.js))
-        .pipe(gulp.dest(dir.build.js))
-        .pipe(browserSync.reload({stream: true}));
-});
-
-// JSON ---------------------------------------------------
-gulp.task('json', function () {
-    return gulp.src(dir.source.json+'/**/*.json')
-        .pipe(changed(dir.build.json))
-        .pipe(gulp.dest(dir.build.json))
-        .pipe(browserSync.reload({stream: true}));
-});
-
-// IMAGES -------------------------------------------------
-gulp.task('images', function () {
-    return gulp.src([dir.assets.images+'/**/*'])
-        .pipe(changed(dir.build.images))
-        .pipe(gulp.dest(dir.build.images))
-        .pipe(browserSync.reload({stream: true}));
-});
 
 // CSS ----------------------------------------------------
 gulp.task('css', function () {
 	return gulp.src([dir.source.css+'/**/*'])
 		.pipe(changed(dir.build.css))
 		.pipe(gulp.dest(dir.build.css))
-		.pipe(browserSync.reload({stream: true}));
 });
 
 // HTML ---------------------------------------------------
@@ -167,35 +137,18 @@ gulp.task('html', function () {
 	return gulp.src([dir.source.html+'/**/*'])
 		.pipe(changed(dir.build.html))
 		.pipe(gulp.dest(dir.build.html))
-		.pipe(browserSync.reload({stream: true}));
 });
-
-// FONTS --------------------------------------------------
-gulp.task('fonts', function () {
-	return gulp.src(dir.assets.fonts+'/**/*')
-		.pipe(changed(dir.build.fonts))
-		.pipe(gulp.dest(dir.build.fonts))
-		.pipe(browserSync.reload({stream: true}));
-});
-
-
-// SOUNDS -------------------------------------------------
-gulp.task('sounds', function () {
-	return gulp.src([dir.assets.sounds+'/**/*'])
-		.pipe(changed(dir.build.sounds))
-		.pipe(gulp.dest(dir.build.sounds))
-		.pipe(browserSync.reload({stream: true}));
-});
-
 
 // TYPESCRIPT ---------------------------------------------
 gulp.task('ts', function () {
-	return gulp.src(dir.source.ts+'/**/*')
-		.pipe(sourcemaps.init())
-		.pipe(tsc({target:'ES5'}))
-		.pipe(concat('App.js'))
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest(dir.build.js));
+
+    var config = require('./webpack.config.js');
+    config.devtool = 'source-map';
+
+    gulp.src(dir.source.ts+'/**/*')
+        .pipe(webpackStream(config))
+        .pipe(sourcemaps.write('./'))
+    	.pipe(gulp.dest(dir.build.root))
 });
 
 // CLEAN --------------------------------------------------
@@ -219,11 +172,8 @@ gulp.task('serve', function(done) {
 		port: 9090,
 		server: {
 			baseDir: [dir.build.root],
-			directory: true,
-			middleware: function (req, res, next) {
-				res.setHeader('Access-Control-Allow-Origin', '*');
-				next();
-			}
+            index: 'index.html',
+			directory: false
 		}
 	}, done);
 });

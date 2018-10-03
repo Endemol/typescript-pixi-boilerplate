@@ -1,0 +1,22 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "forceConsistentCasingInFileNames":true
+  },
+  "include": [
+    "source/ts/**/*",
+    "source/ts/*",
+    "node_modules/@types/**/*"
+  ],
+  "exclude": [
+    "build"
+  ],
+  "sys": {
+    "useCaseSensitiveFileNames": true
+  }
+}
