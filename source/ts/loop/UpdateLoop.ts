@@ -1,9 +1,10 @@
-
 /**
  * Update Loop
  * also referred to as the Game Loop when used within games
  */
-class UpdateLoop {
+import {IUpdate} from './IUpdate';
+
+export class UpdateLoop {
 
 	// Variables --------------------------------------------------------------
 	/**

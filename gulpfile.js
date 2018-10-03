@@ -29,7 +29,6 @@ var prompt = require('gulp-prompt');                    // Interactive console p
 // Directory
 // --------------------------------------------------------------------------------------------------------------------
 
-
 var dir = {source: {}, library: {}, build: {}, assets: {}, binary: {}};
 
 /**
@@ -79,10 +78,6 @@ var deploymentID = {
 	PRODUCTION:2
 };
 
-var operatorID = {
-	BLUEPRINT:0
-};
-
 // --------------------------------------------------------------------------------------------------------------------
 // Utils
 // --------------------------------------------------------------------------------------------------------------------
@@ -113,11 +108,51 @@ function errorHandler(error){
 	console.log('Error',error.message);
 };
 
-
-
 // --------------------------------------------------------------------------------------------------------------------
 // Gulp Tasks
 // --------------------------------------------------------------------------------------------------------------------
+
+
+// DEFAULT ------------------------------------------------
+gulp.task('default', function () {
+    runSequence(
+        'clean',
+        'ts',
+        ['css','html'],
+        'watch',
+        'serve'
+    );
+});
+
+
+// INIT ---------------------------------------------------
+gulp.task('init', function () {
+
+});
+
+// JAVASCRIPT  --------------------------------------------
+gulp.task('js', function () {
+    return gulp.src(dir.source.js+'/**/*')
+        .pipe(changed(dir.build.js))
+        .pipe(gulp.dest(dir.build.js))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+// JSON ---------------------------------------------------
+gulp.task('json', function () {
+    return gulp.src(dir.source.json+'/**/*.json')
+        .pipe(changed(dir.build.json))
+        .pipe(gulp.dest(dir.build.json))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+// IMAGES -------------------------------------------------
+gulp.task('images', function () {
+    return gulp.src([dir.assets.images+'/**/*'])
+        .pipe(changed(dir.build.images))
+        .pipe(gulp.dest(dir.build.images))
+        .pipe(browserSync.reload({stream: true}));
+});
 
 // CSS ----------------------------------------------------
 gulp.task('css', function () {
@@ -143,13 +178,6 @@ gulp.task('fonts', function () {
 		.pipe(browserSync.reload({stream: true}));
 });
 
-// IMAGES -------------------------------------------------
-gulp.task('images', function () {
-	return gulp.src([dir.assets.images+'/**/*'])
-		.pipe(changed(dir.build.images))
-		.pipe(gulp.dest(dir.build.images))
-		.pipe(browserSync.reload({stream: true}));
-});
 
 // SOUNDS -------------------------------------------------
 gulp.task('sounds', function () {
@@ -159,21 +187,6 @@ gulp.task('sounds', function () {
 		.pipe(browserSync.reload({stream: true}));
 });
 
-// JSON ---------------------------------------------------
-gulp.task('json', function () {
-	return gulp.src(dir.source.json+'/**/*.json')
-		.pipe(changed(dir.build.json))
-		.pipe(gulp.dest(dir.build.json))
-		.pipe(browserSync.reload({stream: true}));
-});
-
-// JAVASCRIPT  --------------------------------------------
-gulp.task('js', function () {
-	return gulp.src(dir.source.js+'/**/*')
-		.pipe(changed(dir.build.js))
-		.pipe(gulp.dest(dir.build.js))
-		.pipe(browserSync.reload({stream: true}));
-});
 
 // TYPESCRIPT ---------------------------------------------
 gulp.task('ts', function () {
@@ -216,21 +229,5 @@ gulp.task('serve', function(done) {
 });
 
 
-// INIT ---------------------------------------------------
-gulp.task('init', function () {
-
-});
-
-
-// DEFAULT ------------------------------------------------
-gulp.task('default', function () {
-	runSequence(
-		'clean',
-		'ts',
-		['js','json','images','css','html','fonts','sounds'],
-		'watch',
-		'serve'
-	);
-});
 
 

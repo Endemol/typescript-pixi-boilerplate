@@ -1,21 +1,25 @@
 import SystemRenderer = PIXI.SystemRenderer;
 import CanvasRenderer = PIXI.CanvasRenderer;
 import Container = PIXI.Container;
+import {IUpdate} from '../loop/IUpdate';
+import Application = PIXI.Application;
+import RendererOptions = PIXI.RendererOptions;
+import * as PIXI from "pixi.js";
 
 
 /**
  * PixiMediator
  * @interface {IUpdate}
  */
-class PixiMediator implements IUpdate {
+export class PixiMediator implements IUpdate {
 
-	// Variables --------------------------------------------------------------
-	public renderer:SystemRenderer = null;
-	public scene:Container = null;
+    public app:Application;
+	public renderer:SystemRenderer;
+	public scene:Container;
 
-	// Getters and Setters ----------------------------------------------------
-	get domElement ():HTMLCanvasElement { return this.renderer.view; }
-
+	get domElement ():HTMLCanvasElement {
+		return this.app.view;
+	}
 
 	/**
 	 * @constructor
@@ -27,17 +31,25 @@ class PixiMediator implements IUpdate {
 		this.init(width, height,cssClass);
 	}
 
-	/**
-	 * Init
-	 * @param viewWidth
-	 * @param viewHeight
-	 * @param cssClass
-	 */
-	protected init(viewWidth, viewHeight,cssClass):void {
-		this.renderer = new CanvasRenderer(viewWidth, viewHeight);
-		this.renderer.view.className = cssClass;
+	protected init(width: number, height: number, cssClass:any, options?:RendererOptions):void {
+
+        if (!options) {
+            options = {
+                width: width,
+                height: height,
+                resolution: 1
+            };
+        }
+
+        PIXI.utils.skipHello();
+
+        this.app = new Application(options);
+        this.app.view.className = cssClass;
+        this.renderer = this.app.renderer;
 		this.renderer.backgroundColor = 0xFFFFFF;
 		this.scene = new Container();
+
+		console.log('*** APP CREATED ***');
 	}
 
 	/**

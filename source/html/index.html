@@ -8,38 +8,12 @@
 	<meta name="mobile-web-app-capable" content="yes">
     <title>Zeus Messaging</title>
     <link href="css/base.css" media="screen" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="js/signals.js"></script>
-    <script type="text/javascript" src="js/pixi.js"></script>
-    <script type="text/javascript" src="js/App.js"></script>
 </head>
 
-
-<script type="application/javascript">
-    var app;
-    var init = function () {
-        app = new App();
-    }
-</script>
-
-<body onload="init()">>
-    <div class="utils">
-        <form name="generateMessage">
-            <select id="type" name="type">
-                <option value="mt:ERROR">Error</option>
-                <option value="mt:GENERIC">Generic</option>
-                <option value="mt:CONFIRMATION">Confirmation</option>
-            </select>
-            <select id="location" name="location">
-                <option value="1">Internal</option>
-                <option value="0">Hidden</option>
-                <option value="-1">External</option>
-            </select>
-            Title: <input type="text" name="title" value="title">
-            Body: <input type="text" name="body" value="body">
-            <button id="generate" type="button">Create Message</button>
-        </form>
-    </div>
+<body>>
     <div class="demo"></div>
+
+    <script src="js/App.js"></script>
 </body>
 
 </html>
