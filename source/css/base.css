@@ -10,12 +10,6 @@ body {
 
 .demo {
 	text-align: center;
-	padding: 20px;
-	box-sizing: border-box;
-}
-
-form {
 	padding: 10px;
-	background-color: white;
-	font-family: monospace;
+	box-sizing: border-box;
 }

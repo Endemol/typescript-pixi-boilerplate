@@ -1,6 +1,7 @@
 import {PixiMediator} from './pixi/PixiMediator';
 import {UpdateLoop} from './loop/UpdateLoop';
 import {MainScreen} from './view/MainScreen';
+import {GameDetails} from './constants/GameDetails';
 
 export class App {
 
@@ -16,7 +17,7 @@ export class App {
 	constructor() {
 
 		// init pixi
-		this.pixiMediator = new PixiMediator(620,340,'demo');
+		this.pixiMediator = new PixiMediator(GameDetails.WIDTH,GameDetails.HEIGHT,'demo');
 		this.pixiMediator.scene.addChild(new MainScreen());
 
 		// init render loop

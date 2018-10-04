@@ -1,10 +1,13 @@
 import Container = PIXI.Container;
 import Graphics = PIXI.Graphics;
+import Sprite = PIXI.Sprite;
+import Texture = PIXI.Texture;
+import {GameDetails} from '../constants/GameDetails';
 
 
 export class MainScreen extends Container {
 
-    private _bg:Graphics;
+    private _logo:Sprite;
 
     constructor() {
         super();
@@ -16,9 +19,10 @@ export class MainScreen extends Container {
     }
 
     protected createBackground():void {
-        this._bg = new Graphics();
-        this._bg.beginFill(0xff0000, 1);
-        this._bg.drawRect(100, 100, 100, 100);
-        this.addChild(this._bg);
+        this._logo = Sprite.fromImage('images/esg_logo_512.jpg');
+        this._logo.anchor.set(0.5);
+        this.addChild(this._logo);
+        this._logo.x = GameDetails.WIDTH / 2;
+        this._logo.y = GameDetails.HEIGHT / 2;
     }
 }

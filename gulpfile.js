@@ -55,7 +55,7 @@ function getDirectory(language) {
 	dir.build.js 		= dir.build.root + '/js/';
 	dir.build.json 		= dir.build.root + '/json/';
 	dir.build.css 		= dir.build.root + '/css/';
-	dir.build.images 	= dir.build.root + '/res/';
+	dir.build.images 	= dir.build.root + '/images/';
 	dir.build.fonts 	= dir.build.root + '/lang/'+language+'/';
 	dir.build.json 		= dir.build.root + '/lang/'+language+'/';
 	dir.build.sounds 	= dir.build.root + '/sounds/';
@@ -112,7 +112,7 @@ function errorHandler(error){
 gulp.task('default', function () {
     runSequence(
         'ts',
-        ['css','html'],
+        ['css','images','html'],
         'watch',
         'serve'
     );
@@ -130,6 +130,13 @@ gulp.task('css', function () {
 	return gulp.src([dir.source.css+'/**/*'])
 		.pipe(changed(dir.build.css))
 		.pipe(gulp.dest(dir.build.css))
+});
+
+// IMAGES -------------------------------------------------
+gulp.task('images', function () {
+    return gulp.src([dir.assets.images+'/**/*'])
+        .pipe(changed(dir.build.images))
+        .pipe(gulp.dest(dir.build.images))
 });
 
 // HTML ---------------------------------------------------
