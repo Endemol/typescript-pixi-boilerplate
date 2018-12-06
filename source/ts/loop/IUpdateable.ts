@@ -1,8 +1,8 @@
 /**
- * IUpdate
+ * IUpdateable
  * @interface
  */
-export interface IUpdate  {
+export interface IUpdateable  {
 	/**
 	 * update
 	 * @param {Number} delta - time since last render

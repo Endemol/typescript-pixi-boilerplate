@@ -1,16 +1,16 @@
 import * as PIXI from "pixi.js";
 import SystemRenderer = PIXI.SystemRenderer;
 import Container = PIXI.Container;
-import {IUpdate} from '../loop/IUpdate';
+import {IUpdateable} from '../loop/IUpdateable';
 import Application = PIXI.Application;
 import RendererOptions = PIXI.RendererOptions;
 
 
 /**
  * PixiMediator
- * @interface {IUpdate}
+ * @interface {IUpdateable}
  */
-export class PixiMediator implements IUpdate {
+export class PixiMediator implements IUpdateable {
 
     public app:Application;
 	public renderer:SystemRenderer;
