@@ -3,6 +3,7 @@
  * also referred to as the Game Loop when used within games
  */
 import {IUpdateable} from './IUpdateable';
+import {DateUtils} from '../utils/DateUtils';
 
 export class UpdateLoop {
 
@@ -11,7 +12,19 @@ export class UpdateLoop {
 	 * @type {Array.<IUpdateable>}
 	 * @private
 	 */
-	private _IUpdate:IUpdateable[] = [];
+	private _updateables:IUpdateable[] = [];
+
+    /**
+     * Updates to Remove
+     * @type {Array.<IUpdateable>}
+     * @private
+     */
+    private _iUpdatesToRemove:IUpdateable[] = [];
+
+    /**
+	 * Current time stamp
+     */
+	private _time:number;
 
 	/**
 	 * Last Update at milliseconds since the epoch
@@ -24,25 +37,11 @@ export class UpdateLoop {
 	 * Is Updating
 	 * @type {boolean}
 	 */
-	private _isUpdating:Boolean = false;
+	private _isUpdating:boolean = false;
 
-	/**
-	 * Updates to Remove
-	 * @type {Array.<IUpdateable>}
-	 * @private
-	 */
-	private _iUpdatesToRemove:IUpdateable[] = [];
-
-	/**
-	 * Now - shim
-	 * @type Function
-	 * @private
-	 */
-	private _now:Function = window.performance && window.performance.now ?
-		window.performance.now.bind(window.performance) : Date.now ?
-			Date.now.bind(Date) : function() { return new Date().getTime(); };
-
-	public get isUpdating():Boolean {return this._isUpdating; }
+	public get isUpdating():boolean {
+		return this._isUpdating;
+	}
 
 
 	/**
@@ -57,8 +56,8 @@ export class UpdateLoop {
 	 * Add
 	 * @param {IUpdateable} IUpdate - object that contains a update function
 	 */
-	public add (iUpdate:IUpdateable) {
-		this._IUpdate.push(iUpdate);
+	public add(iUpdate:IUpdateable):void {
+		this._updateables.push(iUpdate);
 	};
 
 	/**
@@ -66,107 +65,91 @@ export class UpdateLoop {
 	 * IUpdates will be removed at the start of the next loop
 	 * @param {IUpdateable} IUpdate - object that contains a update function
 	 */
-	public remove (iUpdate:IUpdateable) {
+	public remove(updateable:IUpdateable):void {
 
 		// Error Checking - is the IUpdateable in the loop?
 		let isInUpdateLoop = false;
 		let i:number;
-		for (i = 0; i < this._IUpdate.length; i++) {
-			if (this._IUpdate[i] === iUpdate) {
+		for (i = 0; i < this._updateables.length; i++) {
+			if (this._updateables[i] === updateable) {
 				isInUpdateLoop = true;
 				break;
 			} else {
-				console.error('ERROR - IUpdateable [' + iUpdate + '] not found in the update array ' + this);
+				console.error('ERROR - IUpdateable [' + updateable + '] not found in the update array ' + this);
 			}
 		}
 
 		// Error Checking - is the IUpdateable already in the array to remove?
 		let isNotInRemoveArray = true;
 		for (i = 0; i < this._iUpdatesToRemove.length; i++) {
-			if (this._iUpdatesToRemove[i] === iUpdate) {
-				console.error('ERROR - IUpdateable [' + iUpdate + '] is already in the array to be removed ' + this);
+			if (this._iUpdatesToRemove[i] === updateable) {
+				console.error('ERROR - IUpdateable [' + updateable + '] is already in the array to be removed ' + this);
 				isNotInRemoveArray = false;
 			}
 		}
 
 		// Add to the list of IUpdates to be removed in the next loop
 		if (isInUpdateLoop && isNotInRemoveArray) {
-			this._iUpdatesToRemove.push(iUpdate);
+			this._iUpdatesToRemove.push(updateable);
 		}
 	};
-
-
+	
 
 	/**
 	 * Start Update Loop
 	 */
-	public start () {
+	public start():void {
 		if (!this._isUpdating) {
 			this._isUpdating = true;
-			window.requestAnimationFrame(this._loop.bind(this));
+			window.requestAnimationFrame(this.loop.bind(this));
 		} else {
 			console.error('ERROR - is already updating! '+this);
 		}
 	};
 
-
 	/**
 	 * Stop Update Loop
 	 */
-	public stop () {
+	public stop():void {
 		this._isUpdating = false;
 	};
-
 
 	/**
 	 * Update Loop
 	 * @private
 	 */
-	private _loop () {
+	private loop():void {
 
 		let i:number;
 
 		// Check if there are any IUpdates to remove
+
 		if (this._iUpdatesToRemove.length > 0) {
 			for (i=0; i<this._iUpdatesToRemove.length; i++) {
-				console.log('REMOVE', this._iUpdatesToRemove[i]);
-				console.log('IUpdateable BEFORE',this._IUpdate);
+				//console.log('REMOVE', this._iUpdatesToRemove[i]);
+				//console.log('IUpdateable BEFORE',this._updateables);
 				this.remove(this._iUpdatesToRemove[i]);
-				console.log('IUpdateable AFTER',this._IUpdate);
+				//console.log('IUpdateable AFTER',this._updateables);
 			}
 			this._iUpdatesToRemove = [];
 		}
 
-		/**
-		 * Now
-		 * @type {number}
-		 */
-		let now = this._now();
+		const now = DateUtils.now();
 
-		/**
-		 * IUpdateable
-		 * @type {Array.<IUpdateable>}
-		 */
-		let u = this._IUpdate;
+        this._time = now() - this._lastUpdateAt;
 
-		/**
-		 * Time in milliseconds since last update
-		 * @type {number}
-		 */
-		let time = now - this._lastUpdateAt;
+		i = this._updateables.length;
 
-		//
-		i = u.length;
 		while( i-- > 0) {
-			u[i].update(time);
+            this._updateables[i].update(this._time);
 		}
 
-		this._lastUpdateAt = now;
+		this._lastUpdateAt = now();
 
 		// Continue Looping
-		if (this._isUpdating) window.requestAnimationFrame(this._loop.bind(this));
+		if (this._isUpdating) {
+			window.requestAnimationFrame(this.loop.bind(this));
+        }
 	};
-
-
 
 }
