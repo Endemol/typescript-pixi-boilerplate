@@ -22,9 +22,6 @@ fi
 
 echo -e "${white}Linking${cc} TypeScript..."
 npm link typescript
-echo -e "${white}Initialising${cc} Git submodules..."
-git submodule update --init --recursive
-echo -e "${white}Creating${cc} directories..."
-mkdir build/
+
 echo -e "${white}Initialising${cc} Gulp..."
 gulp init
