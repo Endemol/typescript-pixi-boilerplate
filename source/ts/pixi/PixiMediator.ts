@@ -1,10 +1,9 @@
-import * as PIXI from 'pixi.js';
-import SystemRenderer = PIXI.SystemRenderer;
+import * as PIXI from 'pixi.js-legacy';
+import Renderer = PIXI.Renderer;
+import CanvasRenderer = PIXI.CanvasRenderer;
 import Container = PIXI.Container;
 import {IUpdateable} from '../loop/IUpdateable';
 import Application = PIXI.Application;
-import RendererOptions = PIXI.RendererOptions;
-
 
 /**
  * PixiMediator
@@ -13,7 +12,7 @@ import RendererOptions = PIXI.RendererOptions;
 export class PixiMediator implements IUpdateable {
 
     public app:Application;
-	public renderer:SystemRenderer;
+	public renderer: Renderer | CanvasRenderer;
 	public scene:Container;
 
 	get domElement ():HTMLCanvasElement {
@@ -26,27 +25,27 @@ export class PixiMediator implements IUpdateable {
 	 * @param height
 	 * @param cssClass
 	 */
-	constructor (width, height,cssClass) {
-		this.init(width, height,cssClass);
+	constructor (width, height, elementID) {
+		this.init(width, height, elementID);
 	}
 
-	protected init(width: number, height: number, cssClass:any, options?:RendererOptions):void {
+	protected init(width: number, height: number, elementID:any, options?:any):void {
 
         if (!options) {
             options = {
                 width: width,
                 height: height,
-                resolution: 1
+                resolution: 1,
+				backgroundColor: 0xFFFFFF
             };
         }
 
         PIXI.utils.skipHello();
 
         this.app = new Application(options);
-        this.app.view.className = cssClass;
+        this.scene = new Container();
+        this.app.stage.addChild(this.scene);
         this.renderer = this.app.renderer;
-		this.renderer.backgroundColor = 0xFFFFFF;
-		this.scene = new Container();
 
 		console.log('*** APP CREATED ***');
 	}

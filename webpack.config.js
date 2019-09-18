@@ -1,4 +1,5 @@
 var path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './source/ts/App.ts',
@@ -9,7 +10,6 @@ module.exports = {
         modules: [path.resolve(__dirname, "source/ts"), "node_modules"],
         extensions: ['.ts', '.js'],
         alias: {
-            'pixi.js' : 'pixi.js/lib/index.js'
         }
     },
     module: {
@@ -18,5 +18,10 @@ module.exports = {
         ],
         noParse: [ /.*(pixi-particles\.js).*/ ]
     },
+    plugins: [
+        new webpack.ProvidePlugin({
+            PIXI: 'pixi.js'
+        })
+    ],
     watch: false
 };
