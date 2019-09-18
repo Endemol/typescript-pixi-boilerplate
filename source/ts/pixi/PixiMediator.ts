@@ -1,4 +1,4 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from 'pixi.js';
 import SystemRenderer = PIXI.SystemRenderer;
 import Container = PIXI.Container;
 import {IUpdateable} from '../loop/IUpdateable';

@@ -8,8 +8,11 @@ body {
     background: #333333;
 }
 
-.demo {
-	text-align: center;
-	padding: 10px;
+#demo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
 	box-sizing: border-box;
+	text-align: center;
 }
