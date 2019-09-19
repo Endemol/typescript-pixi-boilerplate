@@ -18,7 +18,7 @@ export class App {
 
 		// init pixi
 		this.pixiMediator = new PixiMediator(GameDetails.WIDTH, GameDetails.HEIGHT, 'demo');
-		//this.pixiMediator.scene.addChild(new MainScreen());
+		this.pixiMediator.scene.addChild(new MainScreen());
 
 		// init render loop
 		this.updateLoop = new UpdateLoop();

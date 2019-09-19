@@ -23,5 +23,3 @@ fi
 echo -e "${white}Linking${cc} TypeScript..."
 npm link typescript
 
-echo -e "${white}Initialising${cc} Gulp..."
-gulp init
