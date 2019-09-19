@@ -1,7 +1,5 @@
 import Container = PIXI.Container;
-import Graphics = PIXI.Graphics;
 import Sprite = PIXI.Sprite;
-import Texture = PIXI.Texture;
 import {GameDetails} from '../constants/GameDetails';
 
 
@@ -19,7 +17,7 @@ export class MainScreen extends Container {
     }
 
     protected createBackground():void {
-        this._logo = Sprite.fromImage('images/esg_logo_512.jpg');
+        this._logo = Sprite.from('images/esg_logo_512.jpg');
         this._logo.anchor.set(0.5);
         this.addChild(this._logo);
         this._logo.x = GameDetails.WIDTH / 2;

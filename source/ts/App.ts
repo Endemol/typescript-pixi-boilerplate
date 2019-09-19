@@ -1,7 +1,7 @@
 import {PixiMediator} from './pixi/PixiMediator';
 import {UpdateLoop} from './loop/UpdateLoop';
-import {MainScreen} from './view/MainScreen';
 import {GameDetails} from './constants/GameDetails';
+import {MainScreen} from './view/MainScreen';
 
 export class App {
 
@@ -17,8 +17,8 @@ export class App {
 	constructor() {
 
 		// init pixi
-		this.pixiMediator = new PixiMediator(GameDetails.WIDTH,GameDetails.HEIGHT,'demo');
-		this.pixiMediator.scene.addChild(new MainScreen());
+		this.pixiMediator = new PixiMediator(GameDetails.WIDTH, GameDetails.HEIGHT, 'demo');
+		//this.pixiMediator.scene.addChild(new MainScreen());
 
 		// init render loop
 		this.updateLoop = new UpdateLoop();
@@ -26,13 +26,13 @@ export class App {
 		this.updateLoop.start();
 
 		// add dom elements
-        let container: HTMLDivElement = <HTMLDivElement> (document.getElementById('demo'));
+		let container: HTMLDivElement = <HTMLDivElement> (document.getElementById('demo'));
 		container.appendChild( this.pixiMediator.domElement );
 
         console.log('*** APPENDED TO DIV ***');
 
 		// add event handlers
-		window.addEventListener("resize", this._resizeHandler.bind(this));
+		window.addEventListener('resize', this._resizeHandler.bind(this));
 
 	}
 
@@ -44,4 +44,4 @@ export class App {
 
 window.onload = ()=> {
 	let app = new App();
-}
+};
