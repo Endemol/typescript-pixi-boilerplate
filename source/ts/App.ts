@@ -2,6 +2,8 @@ import {PixiMediator} from './pixi/PixiMediator';
 import {UpdateLoop} from './loop/UpdateLoop';
 import {GameDetails} from './constants/GameDetails';
 import {MainScreen} from './view/MainScreen';
+import 'gsap';
+
 
 export class App {
 
