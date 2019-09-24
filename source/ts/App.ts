@@ -3,6 +3,7 @@ import {UpdateLoop} from './loop/UpdateLoop';
 import {GameDetails} from './constants/GameDetails';
 import {MainScreen} from './view/MainScreen';
 import 'gsap';
+import * as PIXI from 'pixi.js-legacy';
 
 
 export class App {
@@ -17,6 +18,11 @@ export class App {
 	 * @constructor
 	 */
 	constructor() {
+
+		// @ts-ignore
+		window.__PIXI_INSPECTOR_GLOBAL_HOOK__ &&
+		// @ts-ignore
+		window.__PIXI_INSPECTOR_GLOBAL_HOOK__.register({ PIXI: PIXI });
 
 		// init pixi
 		this.pixiMediator = new PixiMediator(GameDetails.WIDTH, GameDetails.HEIGHT, 'demo');
