@@ -20,9 +20,10 @@ export class MainScreen extends Container {
         this._logo = Sprite.from('images/esg_logo_512.jpg');
         this._logo.anchor.set(0.5);
         this.addChild(this._logo);
-        this._logo.x = -GameDetails.WIDTH;
+        this._logo.x = GameDetails.WIDTH*0.5;
         this._logo.y = GameDetails.HEIGHT*0.5;
+        this._logo.alpha = 0;
 
-        TweenMax.to(this._logo.position, 1, {x:GameDetails.WIDTH*0.5});
+        TweenMax.to(this._logo, 2, {alpha: 1, delay: 0.5});
     }
 }

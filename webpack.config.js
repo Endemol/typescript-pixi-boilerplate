@@ -2,6 +2,7 @@ var path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+    mode: 'development',
     entry: './source/ts/App.ts',
     output: {
         filename: 'js/App.js'
