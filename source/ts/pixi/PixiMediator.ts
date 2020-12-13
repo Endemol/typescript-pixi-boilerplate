@@ -1,6 +1,5 @@
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import Renderer = PIXI.Renderer;
-import CanvasRenderer = PIXI.CanvasRenderer;
 import Container = PIXI.Container;
 import {IUpdateable} from '../loop/IUpdateable';
 import Application = PIXI.Application;
@@ -12,7 +11,7 @@ import Application = PIXI.Application;
 export class PixiMediator implements IUpdateable {
 
     public app:Application;
-	public renderer: Renderer | CanvasRenderer;
+	public renderer: Renderer;
 	public scene:Container;
 
 	get domElement ():HTMLCanvasElement {
@@ -23,7 +22,7 @@ export class PixiMediator implements IUpdateable {
 	 * @constructor
 	 * @param width
 	 * @param height
-	 * @param cssClass
+	 * @param elementID
 	 */
 	constructor (width, height, elementID) {
 		this.init(width, height, elementID);

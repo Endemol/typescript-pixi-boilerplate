@@ -1,7 +1,7 @@
 import Container = PIXI.Container;
 import Sprite = PIXI.Sprite;
 import {GameDetails} from '../constants/GameDetails';
-
+//import gsap from 'gsap';
 
 export class MainScreen extends Container {
 
@@ -24,6 +24,13 @@ export class MainScreen extends Container {
         this._logo.y = GameDetails.HEIGHT*0.5;
         this._logo.alpha = 0;
 
-        TweenMax.to(this._logo, 2, {alpha: 1, delay: 0.5});
+        // this causes an error: MainScreen.ts:30 Uncaught ReferenceError: gsap is not defined
+        // uncomment the import at the top and its fine
+        // yet surely I should get some sort of indication here that I am going to get an error...
+        gsap.to(this._logo, {
+            duration: 2,
+            alpha: 1,
+            delay: 0.5
+        });
     }
 }

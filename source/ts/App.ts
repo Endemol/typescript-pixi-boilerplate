@@ -3,7 +3,7 @@ import {UpdateLoop} from './loop/UpdateLoop';
 import {GameDetails} from './constants/GameDetails';
 import {MainScreen} from './view/MainScreen';
 import 'gsap';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 
 
 export class App {

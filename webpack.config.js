@@ -21,7 +21,7 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            PIXI: 'pixi.js-legacy'
+            PIXI: 'pixi.js'
         })
     ],
     watch: false
