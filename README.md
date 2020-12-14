@@ -5,19 +5,28 @@ This is a (virtually) empty project that should compile a typescript project tha
 Use it as a sandbox to experiement with stuff. Just make sure you keep master clean, empty and up to date!
 
 ## Requirements
-* [Node.js](http://nodejs.org/) - an asynchronous event driven javascript framework
+* [Node.js](http://nodejs.org/) - an asynchronous event driven javascript framework (version 11 required)
 * [NPM](https://www.npmjs.com/) - a package manager for javascript.
 
 Clone, branch, then run
 
 ```
-$ npm i
+$ bash setup-project.sh
+```
+Or if you are not using a bashable terminal
+```
+$ setup-project.bat
 ```
 
 Then to launch:
-
 ```
 $ gulp
+```
+
+## Troubleshooting
+Sometimes you may find not all the packages install first time round (often Typescript), if, so just run another 
+```
+$ npm i
 ```
 
 If you have trouble with gulp you may need to manually run a
