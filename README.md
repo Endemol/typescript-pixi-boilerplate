@@ -34,3 +34,4 @@ If you have trouble with gulp you may need to manually run a
 ```
 $ npm install gulp -g
 ```
+Just make sure you don't accidentally install gulp 4 - v4 upgrade to the scripts is coming soon!
