@@ -3,6 +3,7 @@ import Renderer = PIXI.Renderer;
 import Container = PIXI.Container;
 import {IUpdateable} from '../loop/IUpdateable';
 import Application = PIXI.Application;
+import {GameDetails} from '../constants/GameDetails';
 
 /**
  * PixiMediator
@@ -35,7 +36,7 @@ export class PixiMediator implements IUpdateable {
                 width: width,
                 height: height,
                 resolution: 1,
-				backgroundColor: 0xFFFFFF
+				backgroundColor: GameDetails.BG_COLOR
             };
         }
 

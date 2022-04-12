@@ -1,11 +1,12 @@
 import Container = PIXI.Container;
 import Sprite = PIXI.Sprite;
 import {GameDetails} from '../constants/GameDetails';
-//import gsap from 'gsap';
+import gsap from 'gsap';
+import {BBGLogoAnimation} from './BBGLogoAnimation';
 
 export class MainScreen extends Container {
 
-    private _logo:Sprite;
+    private _vignette:Sprite;
 
     constructor() {
         super();
@@ -13,24 +14,36 @@ export class MainScreen extends Container {
     }
 
     protected init():void {
-        this.createBackground();
+        this.createVignette();
+        this.createLogo();
     }
 
-    protected createBackground():void {
-        this._logo = Sprite.from('images/esg_logo_512.jpg');
-        this._logo.anchor.set(0.5);
-        this.addChild(this._logo);
-        this._logo.x = GameDetails.WIDTH*0.5;
-        this._logo.y = GameDetails.HEIGHT*0.5;
-        this._logo.alpha = 0;
+    private createVignette(): void {
+        this._vignette = Sprite.from('images/vignette.png');
+        this._vignette.anchor.set(0.5);
+        this._vignette.width = GameDetails.WIDTH;
+        this._vignette.height = GameDetails.HEIGHT;
+        this._vignette.x = GameDetails.WIDTH*0.5;
+        this._vignette.y = GameDetails.HEIGHT*0.5;
+        this._vignette.alpha = 0;
+
+        this.addChild(this._vignette);
 
         // this causes an error: MainScreen.ts:30 Uncaught ReferenceError: gsap is not defined
         // uncomment the import at the top and its fine
         // yet surely I should get some sort of indication here that I am going to get an error...
-        gsap.to(this._logo, {
-            duration: 2,
+        gsap.to(this._vignette, {
+            duration: 1,
             alpha: 1,
-            delay: 0.5
         });
     }
+
+    protected createLogo():void {
+        const bbgLogo:BBGLogoAnimation = new BBGLogoAnimation();
+        bbgLogo.x = GameDetails.WIDTH*0.5;
+        bbgLogo.y = GameDetails.HEIGHT*0.5;
+        this.addChild(bbgLogo);
+        bbgLogo.play();
+    }
+
 }
