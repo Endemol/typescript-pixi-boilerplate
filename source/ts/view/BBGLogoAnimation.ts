@@ -64,7 +64,7 @@ export class BBGLogoAnimation extends Container {
 
     private reset():void {
         this._bomb.scale.set(0);
-        this._bomb.rotation = MathUtils.degreesToRadians(50);
+        this._bomb.rotation = MathUtils.degreesToRadians(90);
         this._spark.scale.set(0);
         this._bang_1.scale.set(0);
         this._bang_2.scale.set(0);
@@ -81,39 +81,40 @@ export class BBGLogoAnimation extends Container {
         }
 
         const tl = gsap.timeline({
-            delay: 3
+            delay: 2
         });
         tl.to(this._bomb, {
-            duration: 0.75,
+            duration: 0.5,
             pixi: {scale:1},
             rotation: 0,
-            ease: Back.easeOut.config(3)
+            ease: Back.easeOut
         });
-        tl.to(this._spark, {
-            duration: 1,
-            pixi: {scale:1},
-            ease: Power2.easeInOut
-        }, '-=1');
-        tl.to(this._spark, {
-            duration: 2,
-            rotation: MathUtils.degreesToRadians(360),
-            ease: Elastic.easeOut
-        }, '-=0.5');
+        tl.to(this._bomb, {
+            duration: 0.6,
+            rotation: 0,
+            ease: Back.easeOut.config(4)
+        }, '-=0.3');
         tl.to(this._bang_1, {
             duration: 0.8,
             pixi: {scale:1},
             ease: Elastic.easeOut
-        }, '-=1.9');
+        }, '-=0.6');
         tl.to(this._bang_2, {
             duration: 0.9,
             pixi: {scale:1},
             ease: Elastic.easeOut
-        }, '-=1.7');
+        }, '-=0.5');
         tl.to(this._games, {
             duration: 0.4,
             pixi: {scale:1},
             ease: Back.easeOut
-        }, '-=0.8');
+        }, '-=0.4');
+
+        tl.to(this._spark, {
+            duration:0.5,
+            pixi: {scale:1},
+            ease: Elastic.easeOut
+        }, '-=1');
 
     }
 }
