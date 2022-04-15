@@ -2,9 +2,9 @@ import {PixiMediator} from './pixi/PixiMediator';
 import {UpdateLoop} from './loop/UpdateLoop';
 import {GameDetails} from './constants/GameDetails';
 import {MainScreen} from './view/MainScreen';
-import 'gsap';
 import * as PIXI from 'pixi.js';
-
+import gsap from 'gsap';
+import { PixiPlugin } from 'gsap/PixiPlugin.js';
 
 export class App {
 
@@ -38,6 +38,9 @@ export class App {
 		container.appendChild( this.pixiMediator.domElement );
 
         console.log('*** APPENDED TO DIV ***');
+
+		gsap.registerPlugin(PixiPlugin);
+		PixiPlugin.registerPIXI(PIXI);
 
 		// add event handlers
 		window.addEventListener('resize', this._resizeHandler.bind(this));
